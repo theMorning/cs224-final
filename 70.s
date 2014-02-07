@@ -5,11 +5,15 @@
 # usage: spim -f 70.s <int> <int>
 #
 # Algorithm in C:
+#  a1=a1+a2
+#  a2=a1-a2
+#  a1=a1-a2
 #
 # Register usage: t8, t9
 
 .data
 newline: .asciiz "\n"
+space: .asciiz " "
 usage_stmt:
   .asciiz   "\nUsage: spim -f 70.s <int> <int>\n"
 
@@ -18,18 +22,13 @@ usage_stmt:
 
 main:
 
-# grab command line stuff - a0 is arg count and a1 points to list of args
+  # grab command line stuff - a0 is arg count and a1 points to list of args
   move $s0, $a0
   move $s1, $a1
 
-  # zero out these registers just to be safe
-  move $s2, $zero
-  move $s3, $zero
-  move $s4, $zero
-     
-  # check if less than three arguments are given
+  # check if not three arguments are given
   li $t0, 3 
-  blt $a0, $t0, set_default
+  bne $a0, $t0, set_default
      
   # parse the first number
   lw $a0, 4($s1)
@@ -40,21 +39,31 @@ main:
   lw $a0, 8($s1)
   jal atoi
   move $t9, $v0
-   
+
+  ble $t8, $t9, dont_swap
+  # swap the two numbers
+  xor $t9, $t9, $t8 
+  xor $t8, $t9, $t8 
+  xor $t9, $t9, $t8 
+
+dont_swap:   
 done:
-  # move the result from t0 to v0 to print it
+  # move the result from t8 to v0 to print it
   move $a0, $t8     
   li $v0, 1
   syscall
 
-  la $a0, newline     
+  # print a space
+  la $a0, space     
   li $v0, 4
   syscall
 
+  # move the result from t9 to v0 to print it
   move $a0, $t9     
   li $v0, 1
   syscall
 
+  # print a newline
   la $a0, newline     
   li $v0, 4
   syscall
@@ -63,7 +72,9 @@ done:
 
 set_default:  
   # load the default values into registers that'll be used
-  jr $ra			# go back to the caller
+  li $t8, 4
+  li $t9, 6
+  j dont_swap			# go to location after input is read
 
 exit:
   li   $v0, 10
