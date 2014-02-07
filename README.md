@@ -14,6 +14,7 @@ Applying skills and concepts from labs 1 - 7 into a MIPS program
 
 ### Other Requirements
 * Source must be well-documented and clean
+
 	addi  $t0, $t0, 1   # add 1 to $t0 - BAD COMMENT
 	addi  $t0, $t0, 1   # increment loop counter - GOOD COMMENT 
 * Must write your own code
