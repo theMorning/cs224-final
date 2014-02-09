@@ -28,8 +28,15 @@ Applying skills and concepts from labs 1 - 7 into a MIPS program
 
    ```sw $v0, 0($fp) # store n! on stack for safekeeping```
 * Week 8  90%  - display row n of Pascal's triangle for k = 0 to n. 
+  * Name function displayRow
+  * Write a loop that goes from k=0 to n
+  * Within the loop display the return value for cnk(n,k)
 * Week 9  95%  - display all rows i of Pascal's triangle, i = 0 to n.
+  * Name function displayTriangle
+  * Wrtie a loop that goes from i=0 to n
+  * Call displayRow function
 * Week 10 100%  - write a recursive function to compute C(n,k)
+  * Optimize recursive function
 
 ### Other Requirements
 * Source must be well-documented and clean
