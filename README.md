@@ -15,6 +15,18 @@ Applying skills and concepts from labs 1 - 7 into a MIPS program
     * Put n! in $v0 before returning
   * Return to main using MIPS jr $ra instruction
 * Week 7  85%  - compute C(n,k) = n!/((n-k)!k!).
+  * Use MIPS DIV instruction, result of DIV is in LO so use MFLO to grab it
+
+   ```DIV rs, rt    # the quotient is stored in LO```
+   
+   ```MFLO rd       # grab the quotient```
+  * Name function cnk
+  * Pass 'n' to cnk in $a0, pass k in $al, and return in $v0
+  * Call fac function
+  * Save $ra to stack frame to keep it from being overwritten
+  * Save result from fac(n), fac(k), and fac(n-k) onto the stack
+
+   ```sw $v0, 0($fp) # store n! on stack for safekeeping```
 * Week 8  90%  - display row n of Pascal's triangle for k = 0 to n. 
 * Week 9  95%  - display all rows i of Pascal's triangle, i = 0 to n.
 * Week 10 100%  - write a recursive function to compute C(n,k)
